@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    apt-spy2 (0.2.0)
+    apt-spy2 (0.2.1)
       colored
       thor
 
