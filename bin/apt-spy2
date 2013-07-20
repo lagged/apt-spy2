@@ -8,6 +8,6 @@ require 'thor'
 require 'open-uri'
 require 'colored'
 require 'fileutils'
-require 'AptSpy2'
+require 'apt/spy2'
 
 AptSpy2.start

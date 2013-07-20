@@ -1,13 +1,23 @@
-Gem::Specification.new do |s|
-  s.name        = 'apt-spy2'
-  s.version     = '0.1.1'
-  s.executables << ['bin/apt-spy2']
-  s.date        = '2013-07-20'
-  s.summary     = "apt-spy2, or apt-spy for ubuntu"
-  s.description = "Keep your /etc/apt/sources.list up to date"
-  s.authors     = ["Till Klampaeckel"]
-  s.email       = 'till@php.net'
-  s.files       = ["lib/AptSpy2.rb"],
-  s.homepage    =
-    'http://rubygems.org/gems/apt-spy2'
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'apt/spy2/version'
+
+Gem::Specification.new do |spec|
+  spec.name          = "apt-spy2"
+  spec.version       = Apt::Spy2::VERSION
+  spec.authors       = ["till"]
+  spec.email         = ["till@php.net"]
+  spec.description   = "Keep your /etc/apt/sources.list up to date"
+  spec.summary       = "apt-spy2, or apt-spy for ubuntu"
+  spec.homepage      = "https://github.com/lagged/apt-spy2"
+  spec.license       = "BSD"
+
+  spec.files         = `git ls-files`.split($/)
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
+
+  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "rake"
 end
