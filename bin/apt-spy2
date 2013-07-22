@@ -3,7 +3,6 @@
 require 'rubygems'
 require 'bundler/setup'
 
-
 require 'thor'
 require 'open-uri'
 require 'colored'

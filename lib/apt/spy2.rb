@@ -81,7 +81,7 @@ class AptSpy2 < Thor
 
     t = Time.now
     r = `lsb_release -c`.split(" ")[1]
-    sources = "## Updated on #{t.to_s}\n"
+    sources = "## Updated on #{t.to_s} by apt-spy2\n"
     sources << "deb #{mirror} #{r} main restricted universe multiverse\n"
     sources << "deb #{mirror} #{r}-updates main restricted universe multiverse\n"
     sources << "deb #{mirror} #{r}-backports main restricted universe multiverse\n"
