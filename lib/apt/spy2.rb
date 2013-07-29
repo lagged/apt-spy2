@@ -1,3 +1,9 @@
+require 'thor'
+require 'open-uri'
+require 'colored'
+require 'fileutils'
+require 'apt/spy2/writer'
+
 class AptSpy2 < Thor
   package_name "apt-spy2"
 
