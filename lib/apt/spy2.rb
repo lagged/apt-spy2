@@ -3,6 +3,7 @@ require 'open-uri'
 require 'colored'
 require 'fileutils'
 require 'apt/spy2/writer'
+require 'json'
 
 class AptSpy2 < Thor
   package_name "apt-spy2"
@@ -38,9 +39,16 @@ class AptSpy2 < Thor
 
   desc "list", "List the currently available mirrors"
   option :country, :default => "mirrors"
+  option :format, :default => "shell"
   def list
+
     mirrors = retrieve(options[:country])
-    puts mirrors
+    @writer = Apt::Spy2::Writer.new(options[:format])
+
+    @writer.set_complete(mirrors)
+
+    puts @writer.to_json if @writer.json?
+    puts mirrors if !@writer.json?
   end
 
   private

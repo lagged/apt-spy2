@@ -14,6 +14,10 @@ module Apt
         @complete = []
       end
 
+      def set_complete(complete)
+        @complete = complete
+      end
+
       def echo(data)
         if @format == 'json'
           @complete.push(data)
