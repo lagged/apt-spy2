@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    apt-spy2 (0.3.0)
+    apt-spy2 (0.4.0)
       colored (>= 1.2)
       json
       thor (>= 0.18.1)
