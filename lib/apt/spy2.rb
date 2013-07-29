@@ -25,9 +25,15 @@ class AptSpy2 < Thor
   desc "check", "Evaluate mirrors"
   option :country, :default => "mirrors"
   option :output, :type => :boolean, :default => true
+  option :format, :default => "shell"
   def check
+
+    @writer = Apt::Spy2::Writer.new(options[:format])
+
     mirrors = retrieve(options[:country])
-    return filter(mirrors, options[:output])
+    filter(mirrors, options[:output])
+
+    puts @writer.to_json if @writer.json?
   end
 
   desc "list", "List the currently available mirrors"
@@ -66,16 +72,18 @@ class AptSpy2 < Thor
     working_mirrors = []
 
     mirrors.each do |mirror|
-      print "Mirror: #{mirror} - " if output
+      data = {"mirror" => mirror }
       begin
         mirror_status = open(mirror)
-        puts "UP".green if output
+        data["status"] = "up"
         working_mirrors << mirror
       rescue OpenURI::HTTPError => the_error
-        puts "BROKEN: #{the_error.io.status[0]}".yellow_on_red if output
+        data["status"] = "broken"
       rescue Errno::ECONNREFUSED
-        puts "DOWN".red if output
+        data["status"] = "down"
       end
+
+      @writer.echo(data) if output
     end
 
     return working_mirrors
