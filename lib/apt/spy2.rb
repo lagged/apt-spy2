@@ -53,11 +53,9 @@ class AptSpy2 < Thor
     rescue OpenURI::HTTPError => the_error
       case the_error.io.status[0]
       when "404"
-        puts "The country code '#{country}' is incorrect.".red
-        exit 1
+        raise "The country code '#{country}' is incorrect."
       else
-        puts "Status: #{the_error.io.status[0]}".red
-        exit 1
+        raise "Status: #{the_error.io.status[0]}"
       end
     end
 
@@ -109,9 +107,9 @@ class AptSpy2 < Thor
         f.write(sources)
       end
     rescue
-      puts "Failed updating #{apt_sources}!".red_on_white
-      puts "You probably need sudo!".red
-      exit 1
+      msg  = "Failed updating #{apt_sources}!"
+      msg << "You probably need sudo!"
+      raise msg
     end
 
     puts "Updated '#{apt_sources}' with #{mirror}".green

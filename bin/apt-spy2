@@ -1,5 +1,11 @@
 #!/usr/bin/env ruby
 
 require 'apt/spy2'
+require 'colored'
 
-AptSpy2.start
+begin
+  AptSpy2.start
+rescue => the_error
+  puts the_error.to_s.white_on_red
+  exit 1
+end
