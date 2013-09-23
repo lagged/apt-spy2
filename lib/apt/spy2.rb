@@ -3,6 +3,9 @@ require 'open-uri'
 require 'colored'
 require 'fileutils'
 require 'apt/spy2/writer'
+require 'apt/spy2/country'
+require 'apt/spy2/ubuntu_mirrors'
+require 'apt/spy2/launchpad'
 require 'json'
 
 class AptSpy2 < Thor
@@ -53,22 +56,11 @@ class AptSpy2 < Thor
 
   private
   def retrieve(country = "mirrors")
-    begin
-      country.upcase! if country.length == 2
-      mirrors = open("http://mirrors.ubuntu.com/#{country}.txt") do |list|
-        list.read
-      end
-    rescue OpenURI::HTTPError => the_error
-      case the_error.io.status[0]
-      when "404"
-        raise "The country code '#{country}' is incorrect."
-      else
-        raise "Status: #{the_error.io.status[0]}"
-      end
-    end
 
-    mirrors = mirrors.split(/\n/)
+    ubuntu_mirrors = Apt::Spy2::UbuntuMirrors.new("http://mirrors.ubuntu.com")
+    mirrors = ubuntu_mirrors.get_mirrors(country)
     return mirrors
+
   end
 
   private
