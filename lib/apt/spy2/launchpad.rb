@@ -13,7 +13,10 @@ module Apt
         mirrors = []
 
         document = Nokogiri::HTML(@launchpad)
-        document.xpath("//tr/th[text()='#{country}']/../following-sibling::*").each do |node|
+        table_rows = document.xpath("//tr/th[text()='#{country}']/../following-sibling::*")
+        raise "Couldn't find a mirror for #{country}." if table_rows.empty?
+
+        table_rows.each do |node|
           break if node['class'] == 'head' # this is the next country heading
 
           next if node.xpath(".//span[@class='distromirrorstatusUP']").empty? # this mirror is broken, behind, etc.
