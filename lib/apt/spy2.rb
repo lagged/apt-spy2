@@ -15,8 +15,9 @@ class AptSpy2 < Thor
   desc "fix", "Set the closest/fastest mirror"
   option :country, :default => "mirrors"
   option :commit, :type => :boolean
+  option :launchpad, :type => :boolean, :banner => "Use launchpad's mirror list"
   def fix
-    working = filter(retrieve(), false)
+    working = filter(retrieve(options[:country], use_launchpad?(options)), false)
     print "The closest mirror is: "
     puts "#{working[0]}".white_on_green
     if !options[:commit]
@@ -31,11 +32,12 @@ class AptSpy2 < Thor
   option :country, :default => "mirrors"
   option :output, :type => :boolean, :default => true
   option :format, :default => "shell"
+  option :launchpad, :type => :boolean, :banner => "Use launchpad's mirror list"
   def check
 
     @writer = Apt::Spy2::Writer.new(options[:format])
 
-    mirrors = retrieve(options[:country])
+    mirrors = retrieve(options[:country], use_launchpad?(options))
     filter(mirrors, options[:output])
 
     puts @writer.to_json if @writer.json?
