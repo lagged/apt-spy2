@@ -43,9 +43,22 @@ class AptSpy2 < Thor
   desc "list", "List the currently available mirrors"
   option :country, :default => "mirrors"
   option :format, :default => "shell"
+  option :launchpad, :type => :boolean, :banner => "Use launchpad's mirror list"
   def list
 
-    mirrors = retrieve(options[:country])
+    use_launchpad = false
+
+    if options[:launchpad]
+
+      if options[:country] == 'mirrors'
+        raise "Please supply a --country. Launchpad cannot guess!"
+      end
+
+      use_launchpad = true
+    end
+
+    mirrors = retrieve(options[:country], use_launchpad)
+
     @writer = Apt::Spy2::Writer.new(options[:format])
 
     @writer.set_complete(mirrors)
@@ -55,7 +68,16 @@ class AptSpy2 < Thor
   end
 
   private
-  def retrieve(country = "mirrors")
+  def retrieve(country = "mirrors", launchpad = false)
+
+    if launchpad === true
+      csv_path = File.expand_path(File.dirname(__FILE__) + "/../../var/country-names.txt")
+      country  = Apt::Spy2::Country.new(csv_path)
+      name     = country.to_country_name(options[:country])
+
+      launchpad = Apt::Spy2::Launchpad.new('https://launchpad.net/ubuntu/+archivemirrors')
+      return launchpad.get_mirrors(name)
+    end
 
     ubuntu_mirrors = Apt::Spy2::UbuntuMirrors.new("http://mirrors.ubuntu.com")
     mirrors = ubuntu_mirrors.get_mirrors(country)
