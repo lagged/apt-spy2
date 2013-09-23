@@ -8,17 +8,7 @@ module Apt
 
       def get_mirrors(country)
 
-        begin
-          mirrors = @ubuntu_mirrors.read
-        rescue OpenURI::HTTPError => the_error
-          case the_error.io.status[0]
-            when "404"
-              raise "The country code '#{country}' is incorrect."
-            else
-              raise "Status: #{the_error.io.status[0]}"
-          end
-        end
-
+        mirrors = @ubuntu_mirrors
         mirrors = mirrors.split(/\n/)
         return mirrors
 
