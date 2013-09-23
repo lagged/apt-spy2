@@ -1,5 +1,6 @@
 # apt-spy2 or, "apt-spy for ubuntu"
 
+[![Build Status](https://travis-ci.org/lagged/apt-spy2.png?branch=master)](https://travis-ci.org/lagged/apt-spy2)
 [![Gem Version](https://badge.fury.io/rb/apt-spy2.png)](http://badge.fury.io/rb/apt-spy2)
 [![Code Climate](https://codeclimate.com/github/lagged/apt-spy2.png)](https://codeclimate.com/github/lagged/apt-spy2)
 
