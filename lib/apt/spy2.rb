@@ -46,19 +46,7 @@ class AptSpy2 < Thor
   option :format, :default => "shell"
   option :launchpad, :type => :boolean, :banner => "Use launchpad's mirror list"
   def list
-
-    use_launchpad = false
-
-    if options[:launchpad]
-
-      if options[:country] == 'mirrors'
-        raise "Please supply a --country. Launchpad cannot guess!"
-      end
-
-      use_launchpad = true
-    end
-
-    mirrors = retrieve(options[:country], use_launchpad)
+    mirrors = retrieve(options[:country], use_launchpad?(options))
 
     @writer = Apt::Spy2::Writer.new(options[:format])
 
@@ -141,5 +129,19 @@ class AptSpy2 < Thor
 
     puts "Updated '#{apt_sources}' with #{mirror}".green
     puts "Run `apt-get update` to update".red_on_yellow
+  end
+
+  private
+  def use_launchpad?(options)
+    if !options[:launchpad]
+      return false
+    end
+
+
+    if options[:country] && options[:country] == 'mirrors'
+      raise "Please supply a --country. Launchpad cannot guess!"
+    end
+
+    return true
   end
 end
