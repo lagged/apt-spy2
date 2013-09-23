@@ -1,19 +1,18 @@
 require 'nokogiri'
-require 'open-uri'
 
 module Apt
   module Spy2
     class Launchpad
 
-      def initialize(url)
-        @launchpad_url = url
+      def initialize(download)
+        @launchpad = download
       end
 
       def get_mirrors(country)
 
         mirrors = []
 
-        document = Nokogiri::HTML(open(@launchpad_url))
+        document = Nokogiri::HTML(@launchpad)
         document.xpath("//tr/th[text()='#{country}']/../following-sibling::*").each do |node|
           break if node['class'] == 'head' # this is the next country heading
 

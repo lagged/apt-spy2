@@ -4,6 +4,7 @@ require 'colored'
 require 'fileutils'
 require 'apt/spy2/writer'
 require 'apt/spy2/country'
+require 'apt/spy2/downloader'
 require 'apt/spy2/ubuntu_mirrors'
 require 'apt/spy2/launchpad'
 require 'json'
@@ -70,16 +71,20 @@ class AptSpy2 < Thor
   private
   def retrieve(country = "mirrors", launchpad = false)
 
+    downloader = Apt::Spy2::Downloader.new
+
     if launchpad === true
       csv_path = File.expand_path(File.dirname(__FILE__) + "/../../var/country-names.txt")
       country  = Apt::Spy2::Country.new(csv_path)
       name     = country.to_country_name(options[:country])
 
-      launchpad = Apt::Spy2::Launchpad.new('https://launchpad.net/ubuntu/+archivemirrors')
+      launchpad = Apt::Spy2::Launchpad.new(downloader.do_download('https://launchpad.net/ubuntu/+archivemirrors'))
       return launchpad.get_mirrors(name)
     end
 
-    ubuntu_mirrors = Apt::Spy2::UbuntuMirrors.new("http://mirrors.ubuntu.com")
+    country.upcase! if country.length == 2
+
+    ubuntu_mirrors = Apt::Spy2::UbuntuMirrors.new(downloader.do_download("http://mirrors.ubuntu.com/#{country}.txt"))
     mirrors = ubuntu_mirrors.get_mirrors(country)
     return mirrors
 
