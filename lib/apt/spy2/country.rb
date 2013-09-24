@@ -7,7 +7,7 @@ module Apt
       end
 
       def to_country_name(code)
-        code.upcase!
+        code = code.upcase
         return code.capitalize unless code.length == 2
 
         File.open(@database).each do |line|
