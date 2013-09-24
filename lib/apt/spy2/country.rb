@@ -23,6 +23,11 @@ module Apt
         raise "Could not look up: #{code}"
       end
 
+      private
+      def capitalize(str)
+        return str.split(" ").map(&:capitalize).join(" ")
+      end
+
     end
   end
 end
