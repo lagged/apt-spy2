@@ -8,14 +8,14 @@ module Apt
 
       def to_country_name(code)
         code = code.upcase
-        return code.capitalize unless code.length == 2
+        return capitalize(code) unless code.length == 2
 
         File.open(@database).each do |line|
           country, tld = line.split(';', 2)
           tld.gsub!(/\n/, '')
 
           if code == tld
-            return country.split(" ").map(&:capitalize).join(" ")
+            return capitalize(country)
           end
 
         end

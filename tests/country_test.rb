@@ -12,7 +12,8 @@ class CountryTest < Minitest::Test
       'de' => 'Germany',
       'fr' => 'France',
       'IE' => 'Ireland',
-      'US' => 'United States'
+      'US' => 'United States',
+      'United Kingdom' => 'United Kingdom'
     }
 
     c = Apt::Spy2::Country.new(@country_list)
