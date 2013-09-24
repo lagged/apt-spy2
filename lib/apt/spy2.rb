@@ -7,7 +7,6 @@ require 'apt/spy2/country'
 require 'apt/spy2/downloader'
 require 'apt/spy2/ubuntu_mirrors'
 require 'apt/spy2/launchpad'
-require 'json'
 
 class AptSpy2 < Thor
   package_name "apt-spy2"
