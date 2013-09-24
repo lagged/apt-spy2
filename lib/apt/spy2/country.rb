@@ -15,7 +15,7 @@ module Apt
           tld.gsub!(/\n/, '')
 
           if code == tld
-            return country.capitalize
+            return country.split(" ").map(&:capitalize).join(" ")
           end
 
         end
