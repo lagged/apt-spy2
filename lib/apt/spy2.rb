@@ -3,7 +3,10 @@ require 'open-uri'
 require 'colored'
 require 'fileutils'
 require 'apt/spy2/writer'
-require 'json'
+require 'apt/spy2/country'
+require 'apt/spy2/downloader'
+require 'apt/spy2/ubuntu_mirrors'
+require 'apt/spy2/launchpad'
 
 class AptSpy2 < Thor
   package_name "apt-spy2"
@@ -11,8 +14,9 @@ class AptSpy2 < Thor
   desc "fix", "Set the closest/fastest mirror"
   option :country, :default => "mirrors"
   option :commit, :type => :boolean
+  option :launchpad, :type => :boolean, :banner => "Use launchpad's mirror list"
   def fix
-    working = filter(retrieve(), false)
+    working = filter(retrieve(options[:country], use_launchpad?(options)), false)
     print "The closest mirror is: "
     puts "#{working[0]}".white_on_green
     if !options[:commit]
@@ -27,11 +31,12 @@ class AptSpy2 < Thor
   option :country, :default => "mirrors"
   option :output, :type => :boolean, :default => true
   option :format, :default => "shell"
+  option :launchpad, :type => :boolean, :banner => "Use launchpad's mirror list"
   def check
 
     @writer = Apt::Spy2::Writer.new(options[:format])
 
-    mirrors = retrieve(options[:country])
+    mirrors = retrieve(options[:country], use_launchpad?(options))
     filter(mirrors, options[:output])
 
     puts @writer.to_json if @writer.json?
@@ -40,9 +45,10 @@ class AptSpy2 < Thor
   desc "list", "List the currently available mirrors"
   option :country, :default => "mirrors"
   option :format, :default => "shell"
+  option :launchpad, :type => :boolean, :banner => "Use launchpad's mirror list"
   def list
+    mirrors = retrieve(options[:country], use_launchpad?(options))
 
-    mirrors = retrieve(options[:country])
     @writer = Apt::Spy2::Writer.new(options[:format])
 
     @writer.set_complete(mirrors)
@@ -52,23 +58,25 @@ class AptSpy2 < Thor
   end
 
   private
-  def retrieve(country = "mirrors")
-    begin
-      country.upcase! if country.length == 2
-      mirrors = open("http://mirrors.ubuntu.com/#{country}.txt") do |list|
-        list.read
-      end
-    rescue OpenURI::HTTPError => the_error
-      case the_error.io.status[0]
-      when "404"
-        raise "The country code '#{country}' is incorrect."
-      else
-        raise "Status: #{the_error.io.status[0]}"
-      end
+  def retrieve(country = "mirrors", launchpad = false)
+
+    downloader = Apt::Spy2::Downloader.new
+
+    if launchpad === true
+      csv_path = File.expand_path(File.dirname(__FILE__) + "/../../var/country-names.txt")
+      country  = Apt::Spy2::Country.new(csv_path)
+      name     = country.to_country_name(options[:country])
+
+      launchpad = Apt::Spy2::Launchpad.new(downloader.do_download('https://launchpad.net/ubuntu/+archivemirrors'))
+      return launchpad.get_mirrors(name)
     end
 
-    mirrors = mirrors.split(/\n/)
+    country.upcase! if country.length == 2
+
+    ubuntu_mirrors = Apt::Spy2::UbuntuMirrors.new(downloader.do_download("http://mirrors.ubuntu.com/#{country}.txt"))
+    mirrors = ubuntu_mirrors.get_mirrors(country)
     return mirrors
+
   end
 
   private
@@ -122,5 +130,19 @@ class AptSpy2 < Thor
 
     puts "Updated '#{apt_sources}' with #{mirror}".green
     puts "Run `apt-get update` to update".red_on_yellow
+  end
+
+  private
+  def use_launchpad?(options)
+    if !options[:launchpad]
+      return false
+    end
+
+
+    if options[:country] && options[:country] == 'mirrors'
+      raise "Please supply a --country. Launchpad cannot guess!"
+    end
+
+    return true
   end
 end
