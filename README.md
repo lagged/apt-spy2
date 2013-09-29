@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/lagged/apt-spy2.png?branch=master)](https://travis-ci.org/lagged/apt-spy2)
 [![Gem Version](https://badge.fury.io/rb/apt-spy2.png)](http://badge.fury.io/rb/apt-spy2)
 [![Code Climate](https://codeclimate.com/github/lagged/apt-spy2.png)](https://codeclimate.com/github/lagged/apt-spy2)
+[![Coverage Status](https://coveralls.io/repos/lagged/apt-spy2/badge.png)](https://coveralls.io/r/lagged/apt-spy2)
 
 
 ## Installation
@@ -80,14 +81,3 @@ Generally, `apt-spy2` plays especially nice in a non-interactive environment and
 ## License
 
 [New BSD License](http://opensource.org/licenses/BSD-2-Clause)
-
-## Contributions are welcome
-
-Clone the repository and install the dependencies:
-
-```
-gem install bundler
-bundle install --dev
-```
-
-Make a feature branch (`topics/foo` or `bugfix/foo`) and send a pull-request.
