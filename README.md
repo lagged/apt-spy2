@@ -80,14 +80,3 @@ Generally, `apt-spy2` plays especially nice in a non-interactive environment and
 ## License
 
 [New BSD License](http://opensource.org/licenses/BSD-2-Clause)
-
-## Contributions are welcome
-
-Clone the repository and install the dependencies:
-
-```
-gem install bundler
-bundle install --dev
-```
-
-Make a feature branch (`topics/foo` or `bugfix/foo`) and send a pull-request.
