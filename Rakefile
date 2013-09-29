@@ -1,6 +1,8 @@
+require "coveralls"
+Coveralls.wear!
+
 require "bundler/gem_tasks"
 require "minitest/autorun"
-require "coveralls"
 
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
