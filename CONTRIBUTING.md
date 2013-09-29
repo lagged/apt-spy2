@@ -13,7 +13,9 @@ bundle install --dev
 
 ## Submit
 
-Make a feature branch (`topics/foo` or `bugfix/foo`) and send a pull-request.
+ 1. Make a feature branch (`topics/foo` or `bugfix/foo`).
+ 2. Run `bundle exec rake test`.
+ 3. Send a pull-request.
 
 ## Testing
 
