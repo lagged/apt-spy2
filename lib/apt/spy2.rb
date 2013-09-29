@@ -138,9 +138,8 @@ class AptSpy2 < Thor
       return false
     end
 
-
     if options[:country] && options[:country] == 'mirrors'
-      raise "Please supply a --country. Launchpad cannot guess!"
+      raise "Please supply a `--country=foo`. Launchpad cannot guess!"
     end
 
     return true
