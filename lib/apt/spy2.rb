@@ -57,6 +57,12 @@ class AptSpy2 < Thor
     puts mirrors if !@writer.json?
   end
 
+  desc "version", "Show which version of apt-spy2 is installed"
+  def version
+    puts Apt::Spy2::VERSION
+    exit
+  end
+
   private
   def retrieve(country = "mirrors", launchpad = false)
 
