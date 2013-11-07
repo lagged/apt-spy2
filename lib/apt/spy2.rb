@@ -18,7 +18,7 @@ class AptSpy2 < Thor
   def fix
     working = filter(retrieve(options[:country], use_launchpad?(options)), false)
     print "The closest mirror is: "
-    puts "#{working[0]}".white_on_green
+    puts "#{working[0]}".bold.magenta
     if !options[:commit]
       puts "Run with --commit to adjust /etc/apt/sources.list".yellow
     else
@@ -135,7 +135,7 @@ class AptSpy2 < Thor
     end
 
     puts "Updated '#{apt_sources}' with #{mirror}".green
-    puts "Run `apt-get update` to update".red_on_yellow
+    puts "Run `apt-get update` to update".black_on_yellow
   end
 
   private
