@@ -94,10 +94,10 @@ class AptSpy2 < Thor
     mirrors.each do |mirror|
       data = {"mirror" => mirror }
       begin
-        mirror_status = open(mirror)
+        open(mirror)
         data["status"] = "up"
         working_mirrors << mirror
-      rescue OpenURI::HTTPError => the_error
+      rescue OpenURI::HTTPError
         data["status"] = "broken"
       rescue Errno::ECONNREFUSED
         data["status"] = "down"
