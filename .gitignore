@@ -1,2 +1,5 @@
 .vagrant
 pkg
+vendor
+coverage
+.bundle

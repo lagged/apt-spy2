@@ -1,6 +1,8 @@
+dist: bionic
+
 language: ruby
 rvm:
-  - 1.9.3
+  - 2.5.1
 
 script:
   - bundle exec rake test
