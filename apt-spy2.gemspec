@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.description   = "Keep your /etc/apt/sources.list up to date"
   spec.summary       = "apt-spy2, or apt-spy for ubuntu"
   spec.homepage      = "https://github.com/lagged/apt-spy2"
-  spec.license       = "BSD"
+  spec.license       = 'BSD-2-Clause'
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
