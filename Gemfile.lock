@@ -21,7 +21,7 @@ GEM
     json (2.2.0)
     mini_portile2 (2.4.0)
     minitest (5.13.0)
-    nokogiri (1.10.5)
+    nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
     rake (13.0.1)
     simplecov (0.16.1)
