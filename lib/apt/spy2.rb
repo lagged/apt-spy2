@@ -99,7 +99,8 @@ class AptSpy2 < Thor
         working_mirrors << mirror
       rescue OpenURI::HTTPError
         data["status"] = "broken"
-      rescue Errno::ECONNREFUSED
+      rescue
+        # this is a catch-all for everything else
         data["status"] = "down"
       end
 
