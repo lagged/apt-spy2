@@ -4,3 +4,7 @@ language: ruby
 
 script:
   - bundle exec rake test
+  - bundle exec rake build
+  - ls -lah ./pkg/apt-spy2*
+  - gem install pkg/apt-spy2*
+  - apt-spy2
