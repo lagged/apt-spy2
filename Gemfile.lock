@@ -23,7 +23,7 @@ GEM
     minitest (5.14.2)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
-    rake (13.0.1)
+    rake (13.0.3)
     simplecov (0.16.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
