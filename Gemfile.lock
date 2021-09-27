@@ -21,7 +21,7 @@ GEM
     json (2.5.1)
     mini_portile2 (2.6.1)
     minitest (5.14.4)
-    nokogiri (1.12.4)
+    nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     racc (1.5.2)
