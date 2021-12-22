@@ -26,5 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "minitest", "~> 5.15.0"
-  spec.add_development_dependency "coveralls"
+  spec.add_development_dependency "simplecov", "~> 0.18"
+  spec.add_development_dependency "simplecov-lcov", "~> 0.8.0"
 end
