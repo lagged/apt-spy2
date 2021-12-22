@@ -1,0 +1,32 @@
+---
+name: pr
+
+on:
+  pull_request
+
+jobs:
+  test:
+    name: "test-${{ matrix.ruby-version }}"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version:
+          - '3.0'
+          - 2.7
+          - 2.6
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+      - run: bundle install
+      - run: bundle exec rake test
+      - run: bundle exec rake build
+      - run: ls -lah ./pkg/apt-spy2*
+      - run: gem install pkg/apt-spy2*
+      - run: apt-spy2
+      - uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+
