@@ -2,8 +2,8 @@
 
 … or: "apt-spy for Ubuntu"
 
-[![Build Status](https://travis-ci.org/lagged/apt-spy2.png?branch=master)](https://travis-ci.org/lagged/apt-spy2)
-[![Gem Version](https://badge.fury.io/rb/apt-spy2.png)](http://badge.fury.io/rb/apt-spy2)
+[![pr](https://github.com/lagged/apt-spy2/actions/workflows/pr.yml/badge.svg)](https://github.com/lagged/apt-spy2/actions/workflows/pr.yml)
+[![Gem Version](https://badge.fury.io/rb/apt-spy2.svg)](https://badge.fury.io/rb/apt-spy2)
 [![Code Climate](https://codeclimate.com/github/lagged/apt-spy2.png)](https://codeclimate.com/github/lagged/apt-spy2)
 [![Coverage Status](https://coveralls.io/repos/lagged/apt-spy2/badge.png)](https://coveralls.io/r/lagged/apt-spy2)
 
