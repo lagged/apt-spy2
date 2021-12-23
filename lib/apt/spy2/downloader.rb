@@ -14,7 +14,7 @@ module Apt
         raise "Please supply a url." if url.nil?
 
         begin
-          return open(@url).read
+          return URI.open(@url, :read_timeout => 10).read
         rescue OpenURI::HTTPError => the_error
           case the_error.io.status[0]
           when "404"
