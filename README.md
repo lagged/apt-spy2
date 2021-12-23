@@ -81,3 +81,9 @@ Generally, `apt-spy2` plays especially nice in a non-interactive environment and
 ## License
 
 [New BSD License](http://opensource.org/licenses/BSD-2-Clause)
+
+### Release (procedure)
+
+ - update version in `lib/apt/spy2/version.rb`
+ - `bundle install`
+ - `git commit -a -m 'New release' && git tag -a vVERSION && git push --tags`
