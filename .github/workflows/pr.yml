@@ -24,7 +24,7 @@ jobs:
       - run: bundle exec rake build
       - run: ls -lah ./pkg/apt-spy2*
       - run: gem install pkg/apt-spy2*
-      - run: apt-spy2
+      - run: apt-spy2 check
       - uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
