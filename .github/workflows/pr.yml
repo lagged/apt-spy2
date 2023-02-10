@@ -30,4 +30,18 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+  test_strict:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2
+      - run: bundle install
+      - run: bundle exec rake test
+      - run: bundle exec rake build
+      - run: ls -lah ./pkg/apt-spy2*
+      - run: gem install pkg/apt-spy2*
+      - run: apt-spy2 check --strict
+
 
