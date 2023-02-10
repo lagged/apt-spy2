@@ -15,8 +15,9 @@ class AptSpy2 < Thor
   option :country, :default => "mirrors"
   option :commit, :type => :boolean
   option :launchpad, :type => :boolean, :banner => "Use launchpad's mirror list"
+  option :strict, :type => :boolean
   def fix
-    working = filter(retrieve(options[:country], use_launchpad?(options)), false)
+    working = filter(retrieve(options[:country], use_launchpad?(options)), options[:strict], false)
     print "The closest mirror is: "
     puts "#{working[0]}".bold.magenta
     if !options[:commit]
@@ -32,12 +33,13 @@ class AptSpy2 < Thor
   option :output, :type => :boolean, :default => true
   option :format, :default => "shell"
   option :launchpad, :type => :boolean, :banner => "Use launchpad's mirror list"
+  option :strict, :type => :boolean
   def check
 
     @writer = Apt::Spy2::Writer.new(options[:format])
 
     mirrors = retrieve(options[:country], use_launchpad?(options))
-    filter(mirrors, options[:output])
+    filter(mirrors, options[:strict], options[:output])
 
     puts @writer.to_json if @writer.json?
   end
@@ -86,7 +88,7 @@ class AptSpy2 < Thor
   end
 
   private
-  def filter(mirrors, output = true)
+  def filter(mirrors, strict = false, output = true)
     # f me :)
 
     working_mirrors = []
@@ -94,7 +96,15 @@ class AptSpy2 < Thor
     mirrors.each do |mirror|
       data = {"mirror" => mirror }
       begin
-        URI.open(mirror)
+        if strict
+          # Check architecture and release
+          release = `lsb_release -c`.split(" ")[1]
+          arch = `uname -m`.strip
+          mirror = mirror + "/dists/" + release + "/Contents-" + arch + ".gz"
+          URI.open(mirror)
+        else
+          URI.open(mirror)
+        end
         data["status"] = "up"
         working_mirrors << mirror
       rescue OpenURI::HTTPError
