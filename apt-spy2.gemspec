@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/lagged/apt-spy2"
   spec.license       = 'BSD-2-Clause'
 
-  spec.required_ruby_version = '>= 2.6', '< 3.2'
+  spec.required_ruby_version = '>= 2.7', '< 3.3'
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'thor', '>= 0.18.1'
   spec.add_dependency 'colored', '>= 1.2'
   spec.add_dependency 'json'
-  spec.add_dependency 'nokogiri', '>= 1.6', '< 1.13'
+  spec.add_dependency 'nokogiri', '~> 1.14.1'
 
   spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rake"
