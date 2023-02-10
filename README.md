@@ -44,13 +44,14 @@ $ apt-spy2 list --launchpad --country=Germany
 
 ### check command
 
-`check` works like `list`, but also determines if the servers returned are working. It supports Launchpad as well.
+`check` works like `list`, but also determines if the servers returned are working. It supports the flag `--launchpad` as well and additionally a flag `--strict` which checks if a mirror carries a certain release and distribution.
 
 ```
 $ apt-spy2 check
 ...
-$ apt-spy2 list --launchpad --country=US
+$ apt-spy2 check --launchpad --country=US
 ...
+$ apt-spy2 check --strict
 ```
 
 ### fix command
