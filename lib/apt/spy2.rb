@@ -7,6 +7,10 @@ require 'apt/spy2/country'
 require 'apt/spy2/downloader'
 require 'apt/spy2/ubuntu_mirrors'
 require 'apt/spy2/launchpad'
+require 'apt/spy2/url'
+require 'net/http'
+require 'net/https'
+require 'uri'
 
 class AptSpy2 < Thor
   package_name "apt-spy2"
@@ -93,32 +97,51 @@ class AptSpy2 < Thor
 
     working_mirrors = []
 
+    url = Apt::Spy2::Url.new(strict)
+
     mirrors.each do |mirror|
       data = {"mirror" => mirror }
-      begin
-        if strict
-          # Check architecture and release
-          release = `lsb_release -c`.split(" ")[1]
-          arch = `uname -m`.strip
-          mirror = mirror + "/dists/" + release + "/Contents-" + arch + ".gz"
-          URI.open(mirror)
-        else
-          URI.open(mirror)
-        end
-        data["status"] = "up"
+
+      check = url.get_mirror(mirror)
+
+      status = broken?(check)
+
+      data["status"] = status
+
+      if status == "up"
         working_mirrors << mirror
-      rescue OpenURI::HTTPError
-        data["status"] = "broken"
-      rescue
-        # this is a catch-all for everything else
-        data["status"] = "down"
       end
 
       @writer.echo(data) if output
     end
 
     return working_mirrors
+  end
 
+  private
+  def broken?(url)
+    uri = URI(url)
+
+    http = Net::HTTP.new(uri.host, uri.port)
+    if uri.scheme == "https"
+      http.use_ssl = true
+    end
+
+    begin
+      response = http.request(Net::HTTP::Head.new(uri.request_uri))
+      if response.code == "200"
+        return "up"
+      end
+
+      if response.code == "404"
+        return "broken"
+      end
+
+      return "down"
+    rescue Exception => e
+      # connection errors, ssl errors, etc.
+      return "down"
+    end
   end
 
   private
