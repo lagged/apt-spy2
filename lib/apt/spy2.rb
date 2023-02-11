@@ -15,11 +15,11 @@ require 'apt/spy2/url'
 # apt-spy2 command interface
 class AptSpy2 < Thor
   package_name 'apt-spy2'
+  class_option :country, default: 'mirrors'
+  class_option :launchpad, type: :boolean, banner: "Use launchpad's mirror list"
 
   desc 'fix', 'Set the closest/fastest mirror'
-  option :country, default: 'mirrors'
   option :commit, type: :boolean
-  option :launchpad, type: :boolean, banner: "Use launchpad's mirror list"
   option :strict, type: :boolean
   def fix
     mirrors = retrieve(options[:country], use_launchpad?(options))
@@ -36,10 +36,8 @@ class AptSpy2 < Thor
   end
 
   desc 'check', 'Evaluate mirrors'
-  option :country, default: 'mirrors'
   option :output, type: :boolean, default: true
   option :format, default: 'shell'
-  option :launchpad, type: :boolean, banner: "Use launchpad's mirror list"
   option :strict, type: :boolean
   def check
     @writer = Apt::Spy2::Writer.new(options[:format])
@@ -51,9 +49,7 @@ class AptSpy2 < Thor
   end
 
   desc 'list', 'List the currently available mirrors'
-  option :country, default: 'mirrors'
   option :format, default: 'shell'
-  option :launchpad, type: :boolean, banner: "Use launchpad's mirror list"
   def list
     mirrors = retrieve(options[:country], use_launchpad?(options))
 
