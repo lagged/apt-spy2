@@ -13,6 +13,12 @@ install:
 release:
 	bundle exec rake release
 
+lint:
+	bundle exec rubocop .
+
+test: install
+	bundle exec rake test
+
 docker-build:
 	docker build -t $(IMAGE) .
 
