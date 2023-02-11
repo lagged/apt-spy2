@@ -7,6 +7,7 @@ require 'apt/spy2/country'
 require 'apt/spy2/downloader'
 require 'apt/spy2/ubuntu_mirrors'
 require 'apt/spy2/launchpad'
+require 'apt/spy2/url'
 require 'net/http'
 require 'net/https'
 require 'uri'
@@ -96,17 +97,14 @@ class AptSpy2 < Thor
 
     working_mirrors = []
 
+    url = Apt::Spy2::Url.new(strict)
+
     mirrors.each do |mirror|
       data = {"mirror" => mirror }
 
-      if strict
-        # Check architecture and release
-        release = `lsb_release -c`.split(" ")[1].strip
-        arch = `uname -m`.strip
-        mirror = "#{mirror}dists/#{release}/Contents-#{fix_arch(arch)}.gz"
-      end
+      check = url.get_mirror(mirror)
 
-      status = broken?(mirror)
+      status = broken?(check)
 
       data["status"] = status
 
@@ -118,17 +116,6 @@ class AptSpy2 < Thor
     end
 
     return working_mirrors
-
-  end
-
-  private
-  # architecture is not reported in the strings we need
-  def fix_arch(str)
-    if str == "x86_64"
-      return "amd64"
-    end
-
-    return "i386"
   end
 
   private
