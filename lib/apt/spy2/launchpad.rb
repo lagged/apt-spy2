@@ -1,15 +1,16 @@
+# frozen_string_literal: true
+
 require 'nokogiri'
 
 module Apt
   module Spy2
+    # parse launchpad output
     class Launchpad
-
       def initialize(download)
         @launchpad = download
       end
 
-      def get_mirrors(country)
-
+      def mirrors(country)
         mirrors = []
 
         document = Nokogiri::HTML(@launchpad)
@@ -27,10 +28,8 @@ module Apt
           end
         end
 
-        return mirrors
-
+        mirrors
       end
-
     end
   end
 end

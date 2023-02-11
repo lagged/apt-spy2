@@ -1,20 +1,20 @@
+# frozen_string_literal: true
+
 require 'colored'
 require 'json'
 
 module Apt
   module Spy2
+    # abstracted puts or json
     class Writer
       def initialize(format)
-
-        if !["json", "shell"].include?(format)
-          raise "Unknown format: #{format}"
-        end
+        raise "Unknown format: #{format}" unless %w[json shell].include?(format)
 
         @format = format
         @complete = []
       end
 
-      def set_complete(complete)
+      def complete(complete)
         @complete = complete
       end
 
@@ -24,32 +24,29 @@ module Apt
           return
         end
 
-        print "Mirror: #{data["mirror"]} - "
+        print "Mirror: #{data['mirror']} - "
 
-        case data["status"]
-        when "up"
-          puts data["status"].upcase.green
-        when "down"
-          puts data["status"].upcase.red
-        when "broken"
-          puts data["status"].upcase.yellow
+        case data['status']
+        when 'up'
+          puts data['status'].upcase.green
+        when 'down'
+          puts data['status'].upcase.red
+        when 'broken'
+          puts data['status'].upcase.yellow
         else
-          puts "Unknown status: #{data["status"]}".white_on_red
+          puts "Unknown status: #{data['status']}".white_on_red
         end
       end
 
       def json?
-        if @format == 'json'
-          return true
-        end
+        return true if @format == 'json'
 
-        return false
+        false
       end
 
-      def to_json
+      def to_json(*_args)
         JSON.generate(@complete)
       end
-
     end
   end
 end

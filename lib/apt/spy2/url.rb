@@ -1,24 +1,27 @@
+# frozen_string_literal: true
+
 module Apt
   module Spy2
+    # build mirror url
     class Url
       def initialize(strict)
         @strict = strict
       end
 
-      def get_mirror(mirror)
+      def adjust!(mirror)
         return mirror unless @strict
 
-        return "#{mirror}dists/#{get_release()}/Contents-#{get_arch()}.gz"
+        "#{mirror}dists/#{release}/Contents-#{arch}.gz"
       end
 
       private
-      def get_arch()
-        return `dpkg --print-architecture`.strip
+
+      def arch
+        `dpkg --print-architecture`.strip
       end
 
-      private
-      def get_release()
-        return `lsb_release -c`.split(" ")[1].strip
+      def release
+        `lsb_release -c`.split(' ')[1].strip
       end
     end
   end

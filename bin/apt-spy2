@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'apt/spy2'
 require 'colored'
@@ -8,7 +9,7 @@ Encoding.default_internal = Encoding::UTF_8
 
 begin
   AptSpy2.start
-rescue => the_error
-  puts the_error.to_s.white_on_red
+rescue StandardError => e
+  puts e.to_s.white_on_red
   exit 1
 end

@@ -1,24 +1,17 @@
-require "bundler/gem_tasks"
-require "minitest/autorun"
-require "simplecov"
-require "simplecov-lcov"
+# frozen_string_literal: true
+
+require 'bundler/gem_tasks'
+require 'rake/testtask'
 
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 
-task :test do
+Rake::TestTask.new do |t|
   ENV['COVERAGE'] = 'true'
+  t.pattern = 'tests/*_test.rb'
 
-  SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
-  SimpleCov::Formatter::LcovFormatter.config do |c|
-    c.output_directory = './coverage'
-    c.report_with_single_file = true
-    c.single_report_path = './coverage/lcov.info'
-  end
-  SimpleCov.start
-
-  $LOAD_PATH.unshift('lib', 'tests')
-  Dir.glob('./tests/*_test.rb') do |f|
-    require f
-  end
+  # $LOAD_PATH.unshift('lib', 'tests')
+  # Dir.glob('./tests/*_test.rb').sort.each do |f|
+  #   require f
+  # end
 end
