@@ -11,7 +11,10 @@ module Apt
       def initialize(url)
         uri = URI(url)
 
+        # sets hopefully sensible timeouts for read and connection
         http = Net::HTTP.new(uri.host, uri.port)
+        http.read_timeout = 10
+        http.open_timeout = 10
         http.use_ssl = true if uri.scheme == 'https'
 
         @http = http
