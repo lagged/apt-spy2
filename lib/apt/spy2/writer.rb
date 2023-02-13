@@ -2,6 +2,7 @@
 
 require 'colored'
 require 'json'
+require 'apt/spy2/status'
 
 module Apt
   module Spy2
@@ -25,17 +26,7 @@ module Apt
         end
 
         print "Mirror: #{data['mirror']} - "
-
-        case data['status']
-        when 'up'
-          puts data['status'].upcase.green
-        when 'down'
-          puts data['status'].upcase.red
-        when 'broken'
-          puts data['status'].upcase.yellow
-        else
-          puts "Unknown status: #{data['status']}".white_on_red
-        end
+        Apt::Spy2::Status.print(data['status'])
       end
 
       def json?
@@ -44,6 +35,7 @@ module Apt
         false
       end
 
+      # generates a json string
       def to_json(*_args)
         JSON.generate(@complete)
       end

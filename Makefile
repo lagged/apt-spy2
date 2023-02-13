@@ -6,9 +6,11 @@ container:=apt-spy2
 
 clean:
 	docker rm -f $(container) || true
+	rm -rf vendor
 
 install:
-	bundle install --path ./vendor/bundle
+	bundle config set --local path './vendor/bundle'
+	bundle install
 
 release:
 	bundle exec rake release

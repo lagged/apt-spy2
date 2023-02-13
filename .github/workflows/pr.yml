@@ -45,5 +45,6 @@ jobs:
       - run: gem install pkg/apt-spy2*
       - run: apt-spy2 check --strict
       - run: sudo env "PATH=$PATH" apt-spy2 fix --commit --strict
+      - run: sudo env "PATH=$PATH" apt-spy2 check --launchpad --country=us --strict
 
 

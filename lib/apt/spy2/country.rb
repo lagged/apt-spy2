@@ -12,7 +12,7 @@ module Apt
         code = code.upcase
         return capitalize!(code) unless code.length == 2
 
-        File.open(@database).each do |line|
+        File.open(@database, 'r:UTF-8').each do |line|
           country, tld = line.split(';', 2)
           tld.gsub!(/\n/, '')
 
