@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'thor'
-require 'open-uri'
 require 'colored'
 require 'fileutils'
 require 'apt/spy2/writer'
