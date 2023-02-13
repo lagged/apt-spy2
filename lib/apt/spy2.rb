@@ -129,10 +129,10 @@ class AptSpy2 < Thor
     t = Time.now
     r = `lsb_release -c`.split(' ')[1]
     sources = "## Updated on #{t} by apt-spy2\n"
-    sources << "deb #{mirror} #{r} main restricted universe multiverse\n"
-    sources << "deb #{mirror} #{r}-updates main restricted universe multiverse\n"
-    sources << "deb #{mirror} #{r}-backports main restricted universe multiverse\n"
-    sources << "deb #{mirror} #{r}-security main restricted universe multiverse\n"
+    sources += "deb #{mirror} #{r} main restricted universe multiverse\n"
+    sources += "deb #{mirror} #{r}-updates main restricted universe multiverse\n"
+    sources += "deb #{mirror} #{r}-backports main restricted universe multiverse\n"
+    sources += "deb #{mirror} #{r}-security main restricted universe multiverse\n"
 
     apt_sources = '/etc/apt/sources.list'
 
@@ -143,7 +143,7 @@ class AptSpy2 < Thor
       end
     rescue StandardError
       msg  = "Failed updating #{apt_sources}!"
-      msg << 'You probably need sudo!'
+      msg += 'You probably need sudo!'
       raise msg
     end
 
