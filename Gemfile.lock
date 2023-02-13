@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    apt-spy2 (0.8.0)
+    apt-spy2 (0.8.2)
       colored (>= 1.2)
       json
       nokogiri (~> 1.14.1)

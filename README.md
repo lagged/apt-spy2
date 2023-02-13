@@ -87,4 +87,5 @@ Generally, `apt-spy2` plays especially nice in a non-interactive environment and
 
 * update version in `lib/apt/spy2/version.rb`
 * `bundle install`
-* `git commit -a -m 'New release' && git tag -a vVERSION && git push --tags`
+* `git commit -a 'Prep x.y.z'
+* `git tag -a vVERSION && git push --tags`
