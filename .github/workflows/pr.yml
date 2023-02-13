@@ -26,6 +26,7 @@ jobs:
       - run: ls -lah ./pkg/apt-spy2*
       - run: gem install pkg/apt-spy2*
       - run: apt-spy2 check
+      - run: sudo env "PATH=$PATH" apt-spy2 fix --commit
       - uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -43,5 +44,6 @@ jobs:
       - run: ls -lah ./pkg/apt-spy2*
       - run: gem install pkg/apt-spy2*
       - run: apt-spy2 check --strict
+      - run: sudo env "PATH=$PATH" apt-spy2 fix --commit --strict
 
 
