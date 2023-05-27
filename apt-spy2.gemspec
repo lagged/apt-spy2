@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/lagged/apt-spy2'
   spec.license       = 'BSD-2-Clause'
 
-  spec.required_ruby_version = '>= 2.7', '< 3.3'
+  spec.required_ruby_version = ['>= 2.7', '< 3.3']
 
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
