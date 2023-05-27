@@ -7,14 +7,17 @@ module Apt
     # parse launchpad output
     class Launchpad
       def initialize(download)
-        @launchpad = download
+        @document = Nokogiri::HTML(download) do |c|
+          # rubocop:disable Layout/LineLength
+          c.options = Nokogiri::XML::ParseOptions::HUGE | Nokogiri::XML::ParseOptions::NONET | Nokogiri::XML::ParseOptions::RECOVER
+          # rubocop:enable Layout/LineLength
+        end
       end
 
       def mirrors(country)
         mirrors = []
 
-        document = Nokogiri::HTML(@launchpad)
-        table_rows = document.xpath("//tr/th[text()='#{country}']/../following-sibling::*")
+        table_rows = @document.xpath("//tr/th[text()='#{country}']/../following-sibling::*")
         raise "Couldn't find a mirror for #{country}." if table_rows.empty?
 
         table_rows.each do |node|

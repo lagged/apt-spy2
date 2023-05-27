@@ -17,7 +17,7 @@ gem install apt-spy2
 ## Usage
 
 ```sh
-$ apt-spy2                                                                                                                                                         [21:03:52]
+$ apt-spy2
 apt-spy2 commands:
   apt-spy2 check           # Evaluate mirrors
   apt-spy2 fix             # Set the closest/fastest mirror
