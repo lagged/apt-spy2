@@ -47,7 +47,7 @@ GEM
     simplecov-html (0.12.3)
     simplecov-lcov (0.8.0)
     simplecov_json_formatter (0.1.4)
-    thor (1.2.1)
+    thor (1.2.2)
     unicode-display_width (2.4.2)
 
 PLATFORMS
