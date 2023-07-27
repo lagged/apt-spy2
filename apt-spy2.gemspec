@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'thor', '>= 0.18.1'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
-  spec.add_development_dependency 'minitest', '~> 5.18.0'
+  spec.add_development_dependency 'minitest', '~> 5.19.0'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'simplecov', '~> 0.18'
