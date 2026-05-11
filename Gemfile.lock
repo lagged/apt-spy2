@@ -13,7 +13,7 @@ GEM
     ast (2.4.2)
     colored (1.2)
     docile (1.4.0)
-    json (2.7.2)
+    json (2.19.5)
     language_server-protocol (3.17.0.3)
     mini_portile2 (2.8.5)
     minitest (5.25.1)
